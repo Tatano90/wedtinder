@@ -82,10 +82,11 @@
         profiles.forEach((p, index) => {
             const card = document.createElement('article');
             card.className = 'profile-card';
+            // prima card attiva
             if (index === 0) {
                 card.classList.add('active');
             }
-            const dataLabel = p.Data ? `Profilo creato il ${p.Data}` : '';
+            // niente più Data
             card.setAttribute('data-name', p.Nome || `Profilo ${index + 1}`);
             card.innerHTML = `
                 <div class="profile-image-wrapper">
@@ -93,13 +94,14 @@
                 </div>
                 <div class="profile-header">
                     <span class="profile-name">${p.Nome || 'Ospite'}</span>
-                    <span class="profile-tag">${dataLabel}</span>
                 </div>
                 <p class="profile-description">
-                    <strong>Mi piace:</strong> ${p['Mi piace'] || '-'}
+                    <span class="profile-label">Mi piace:</span>
+                    <span class="profile-value">${p['Mi piace'] || '-'}</span>
                 </p>
-                <p class="profile-meta">
-                    <strong>Odio:</strong> ${p['Odio'] || '-'}
+                <p class="profile-meta profile-meta-odio">
+                    <span class="profile-label">Odio:</span>
+                    <span class="profile-value">${p['Odio'] || '-'}</span>
                 </p>
                 <div class="actions">
                     <button class="btn-like">Mi piace</button>

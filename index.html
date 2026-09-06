@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WedTinder – Graziano & Anna</title>
+    <!-- Font coerenti con il sito principale -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap"
+          rel="stylesheet">
+    <!-- CSS centralizzato -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- Navbar semplice -->
+<nav class="nav-bar">
+    <div class="nav-container">
+        <!-- Adatta l'href al tuo sito principale -->
+        <a href="index_2013.html#wedgames" class="nav-logo">G &amp; A</a>
+        <a href="index_2013.html#wedgames" class="nav-link-main">Torna al sito</a>
+    </div>
+</nav>
+<main>
+    <!-- Hero WedTinder -->
+    <section class="hero-wedtinder">
+        <h1 class="hero-title">WedTinder</h1>
+        <p class="hero-subtitle">Swipe, sorrisi e nuove connessioni</p>
+        <div class="hero-divider"></div>
+        <p class="hero-description">
+            Un piccolo gioco per rompere il ghiaccio durante il matrimonio:
+            scorrete i profili degli invitati, scoprite chi condivide i vostri
+            “Mi piace” e i vostri “Odio” e lasciatevi guidare dai match della serata.
+        </p>
+    </section>
+    <!-- Contenitore Gioco -->
+    <section class="game-container">
+        <div class="game-header">
+            <h2 class="game-header-title">Profili della serata</h2>
+            <p class="game-header-text">
+                Clicca <strong>Mi piace</strong> se ti piacerebbe conoscere meglio questa persona,
+                oppure <strong>Salta</strong> per passare al profilo successivo.
+            </p>
+        </div>
+        <!-- Qui il JS inserirà le card -->
+        <div id="profiles-container"></div>
+        <!-- Barra di stato -->
+        <div class="status-bar">
+            <span class="status-counter" id="status-counter"></span>
+            <span id="status-liked"></span>
+        </div>
+        <!-- Riepilogo finale -->
+        <div class="summary-panel" id="summary-panel" style="display: none;">
+            <p>
+                Hai espresso un <span class="summary-highlight" id="summary-like-count"></span> “Mi piace” durante il gioco.
+            </p>
+            <p>Profili che ti hanno ispirato:</p>
+            <ul class="summary-list" id="summary-list"></ul>
+            <p style="margin-top: 10px;">
+                Ora tocca a te: guarda in sala, trova questi volti
+                e trasforma il match in un sorriso vero.
+            </p>
+        </div>
+    </section>
+</main>
+<footer class="footer">
+    Graziano &amp; Anna · WedTinder – perché ogni matrimonio è anche una nuova rete di amicizie.
+</footer>
+<script>
+    // URL del JSON – se il file è nella stessa cartella di index.html:
+    const WEDTINDER_JSON_URL = 'wedtinder_json.json';
+    const container = document.getElementById('profiles-container');
+    let cards = [];
+    let currentIndex = 0;
+    let likeCount = 0;
+    const likedProfiles = [];
+    const counterEl = document.getElementById('status-counter');
+    const likedEl = document.getElementById('status-liked');
+    const summaryPanel = document.getElementById('summary-panel');
+    const summaryLikeCount = document.getElementById('summary-like-count');
+    const summaryList = document.getElementById('summary-list');
+    function renderProfiles(profiles) {
+        container.innerHTML = '';
+        profiles.forEach((p, index) => {
+            const card = document.createElement('article');
+            card.className = 'profile-card';
+            if (index === 0) {
+                card.classList.add('active');
+            }
+            const dataLabel = p.Data ? `Profilo creato il ${p.Data}` : '';
+            card.setAttribute('data-name', p.Nome || `Profilo ${index + 1}`);
+            card.innerHTML = `
+                <div class="profile-image-wrapper">
+                    <img src="${p.Foto}" alt="Profilo ${p.Nome || ''}">
+                </div>
+                <div class="profile-header">
+                    <span class="profile-name">${p.Nome || 'Ospite'}</span>
+                    <span class="profile-tag">${dataLabel}</span>
+                </div>
+                <p class="profile-description">
+                    <strong>Mi piace:</strong> ${p['Mi piace'] || '-'}
+                </p>
+                <p class="profile-meta">
+                    <strong>Odio:</strong> ${p['Odio'] || '-'}
+                </p>
+                <div class="actions">
+                    <button class="btn-like">Mi piace</button>
+                    <button class="btn-skip">Salta</button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+        cards = Array.from(document.querySelectorAll('.profile-card'));
+        currentIndex = 0;
+        likeCount = 0;
+        likedProfiles.length = 0;
+        summaryPanel.style.display = 'none';
+        bindCardEvents();
+        updateStatus();
+    }
+    function updateStatus() {
+        if (!counterEl || !likedEl) return;
+        if (cards.length === 0) {
+            counterEl.textContent = 'Nessun profilo disponibile';
+            likedEl.textContent = '';
+            return;
+        }
+        counterEl.textContent = `Profilo ${currentIndex + 1} di ${cards.length}`;
+        likedEl.textContent = `Mi piace: ${likeCount}`;
+    }
+    function showCard(index) {
+        cards.forEach((card, i) => {
+            card.classList.toggle('active', i === index);
+        });
+        updateStatus();
+    }
+    function showSummary() {
+        cards.forEach(card => card.classList.remove('active'));
+        summaryLikeCount.textContent = likeCount;
+        summaryList.innerHTML = '';
+        likedProfiles.forEach(name => {
+            const li = document.createElement('li');
+            li.textContent = name;
+            summaryList.appendChild(li);
+        });
+        summaryPanel.style.display = 'block';
+        if (counterEl) counterEl.textContent = 'Fine gioco';
+        if (likedEl) likedEl.textContent = '';
+    }
+    function handleAction(isLike) {
+        if (currentIndex >= cards.length) return;
+        const currentCard = cards[currentIndex];
+        const profileName = currentCard.getAttribute('data-name') || 'Profilo ' + (currentIndex + 1);
+        if (isLike) {
+            likeCount++;
+            likedProfiles.push(profileName);
+        }
+        currentIndex++;
+        if (currentIndex < cards.length) {
+            showCard(currentIndex);
+        } else {
+            showSummary();
+        }
+        // opzionale: salvataggio locale
+        localStorage.setItem('wedtinder_likes', JSON.stringify(likedProfiles));
+    }
+    function bindCardEvents() {
+        cards.forEach(card => {
+            const likeBtn = card.querySelector('.btn-like');
+            const skipBtn = card.querySelector('.btn-skip');
+            if (!likeBtn || !skipBtn) return;
+            likeBtn.addEventListener('click', () => handleAction(true));
+            skipBtn.addEventListener('click', () => handleAction(false));
+        });
+    }
+    // Caricamento JSON all’avvio
+    fetch(WEDTINDER_JSON_URL)
+        .then(res => {
+            if (!res.ok) throw new Error('Errore nel caricamento del JSON WedTinder');
+            return res.json();
+        })
+        .then(data => {
+            renderProfiles(data);
+        })
+        .catch(err => {
+            console.error(err);
+            if (container) {
+                container.innerHTML = '<p style="text-align:center; color:#666;">Impossibile caricare i profili. Riprova più tardi.</p>';
+            }
+        });
+</script>
+</body>
+</html>

@@ -152,21 +152,23 @@ main {
 .profile-card.active {
     display: block;
 }
+/* BOX IMMAGINE – si adatta alla foto, nessun taglio */
 .profile-image-wrapper {
     width: 100%;
-    /* niente height fissa: lascia che sia l'immagine a decidere */
+    /* nessuna altezza fissa: decide l'immagine */
     border-radius: 12px;
     overflow: hidden;
     margin-bottom: 16px;
-    display: inline-block; /* il box si adatta all'immagine */
+    display: inline-block; /* il box segue le dimensioni dell'immagine */
 }
+/* IMMAGINE – mantiene proporzioni, niente crop */
 .profile-image-wrapper img {
     display: block;
-    max-width: 320px;  /* limite opzionale */
-    width: 100%;
-    height: auto;
-    object-fit: contain;
+    width: 100%;       /* riempie la larghezza della card */
+    height: auto;      /* altezza proporzionale */
+    object-fit: contain; /* evita tagli */
 }
+/* Header nome profilo */
 .profile-header {
     display: flex;
     justify-content: space-between;

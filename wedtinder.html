@@ -67,7 +67,7 @@ function renderProfiles(profiles) {
         card.setAttribute('data-name', p.Nome || `Profilo ${index + 1}`);
         card.innerHTML = `
             <div class="profile-image-wrapper">
-                <img src="${p.Foto}" alt="Profilo ${p.Nome || ''}">
+                <img src="${p.Foto}" alt="Profilo ${p.Nome || ''}" loading="lazy">
             </div>
             <div class="profile-header">
                 <span class="profile-name">${p.Nome || 'Ospite'}</span>

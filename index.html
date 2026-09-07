@@ -3,223 +3,316 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WedTinder – Graziano & Anna</title>
-    <!-- Font coerenti con il sito principale -->
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap"
-          rel="stylesheet">
-    <!-- CSS centralizzato -->
+    <title>Graziano e Anna - Ci Sposiamo!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<!-- Navbar semplice -->
 <nav class="nav-bar">
     <div class="nav-container">
-        <!-- Link al sito principale -->
-        <a href="index.html#wedgames" class="nav-logo">G &amp; A</a>
-        <a href="index.html#wedgames" class="nav-link-main">Torna al sito</a>
+        <a href="#home" class="nav-logo">G &amp; A</a>
+        <button class="nav-toggle" aria-label="Apri menù">
+            <span class="nav-toggle-line"></span>
+            <span class="nav-toggle-line"></span>
+            <span class="nav-toggle-line"></span>
+        </button>
+        <ul class="nav-menu">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#programma">Programma</a></li>
+            <li><a href="#luoghi">Luoghi</a></li>
+            <li><a href="#wedgames">WedGames!</a></li>
+            <li><a href="#storia">Il viaggio continua</a></li>
+            <li><a href="#info-utili">Info Utili</a></li>
+            <li><a href="#foto">Foto</a></li>
+            <li><a href="#rsvp">RSVP</a></li>
+        </ul>
     </div>
 </nav>
-<main>
-    <!-- Hero WedTinder -->
-    <section class="hero-wedtinder">
-        <h1 class="hero-title">WedTinder</h1>
-        <p class="hero-subtitle">Swipe, sorrisi e nuove connessioni</p>
+<section id="home" class="hero">
+    <div class="hero-content">
+        <h1 class="hero-title">Graziano e Anna</h1>
         <div class="hero-divider"></div>
-        <p class="hero-description">
-            Un piccolo gioco per rompere il ghiaccio durante il matrimonio:
-            scorrete i profili degli invitati, scoprite chi condivide i vostri
-            “Mi piace” e i vostri “Odio” e lasciatevi guidare dai match della serata.
-        </p>
-    </section>
-    <!-- Contenitore Gioco -->
-    <section class="game-container">
-        <div class="game-header">
-            <h2 class="game-header-title">Profili della serata</h2>
-            <p class="game-header-text">
-                Clicca <strong>Mi piace</strong> se ti piacerebbe conoscere meglio questa persona,
-                oppure <strong>Salta</strong> per passare al profilo successivo.
-            </p>
+        <p class="hero-date">Lunedì 7 dicembre 2026</p>
+        <p class="hero-location">Lanciano (CH)</p>
+    </div>
+</section>
+<section id="programma" class="bg-section">
+    <div class="bg-section-inner">
+        <div class="bg-section-box">
+            <details class="section-details">
+                <summary class="section-summary">Programma</summary>
+                <p class="section-intro bg-section-intro">Un giorno speciale che vogliamo condividere con voi. Ecco il programma degli eventi!</p>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-time">06/12 - h18:30</div>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Serenata</h3>
+                            <p>Ci ritroviamo la sera prima della cerimonia presso la Casa della Sposa per la classica serenata pre-matrimonio. A seguire un piccolo aperitivo preparato dalla Marisa.</p>
+                            <br>
+                            <p>📍 <a href="#luogo-serenata" class="program-location-link">Casa della Sposa</a></p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">7/12 - h11:00</div>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Cerimonia Religiosa</h3>
+                            <p>La Cerimonia avrà luogo nella barocca e sontuosa Cattedrale di Lanciano. Per godere al meglio della cerimonia e dell'arrivo della sposa consigliamo di arrivare con 15/20 min di anticipo. Mi raccomando, Padre Milton non ama i ritardatari!</p>
+                            <br>
+                            <p>📍 <a href="#luogo-cerimonia" class="program-location-link">Cattedrale Madonna del Ponte</a></p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">7/12 - h13:00</div>
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Pranzo e Festeggiamenti</h3>
+                            <p>La festa proseguirà con parenti e amici in una location "Country Chic", sobria ed elegante immersa nel verde delle colline teatine. Sorrisi, allegria, musica e tanto divertimento fino a notte fonda!</p>
+                            <br>
+                            <p>📍 <a href="#luogo-ricevimento" class="program-location-link">La Chiave Bianca</a></p>
+                        </div>
+                    </div>
+                </div>
+            </details>
         </div>
-        <!-- Qui il JS inserirà le card -->
-        <div id="profiles-container"></div>
-        <!-- Barra di stato -->
-        <div class="status-bar">
-            <span class="status-counter" id="status-counter"></span>
-            <span id="status-liked"></span>
+    </div>
+</section>
+<section id="luoghi" class="section-alt bg-section">
+    <div class="bg-section-inner">
+        <div class="bg-section-box-alt">
+            <details class="section-details">
+                <summary class="section-summary">Luoghi</summary>
+                <p class="section-intro bg-section-intro">I luoghi che ospiteranno la nostra celebrazione nel cuore dell’Abruzzo.</p>
+                <div class="venue-grid">
+                    <div class="venue-card" id="luogo-serenata">
+                        <img src="img/casasposa2.jpg" alt="Casa della Sposa" class="venue-image">
+                        <p class="venue-name">Casa della Sposa</p>
+                        <p class="venue-address">Via Panoramica, 62<br>Lanciano (CH)</p>
+                        <a href="https://www.google.com/maps/place/Via+Panoramica,+62,+66034+Lanciano+CH" target="_blank" class="venue-link">Google Maps</a>
+                    </div>
+                    <div class="venue-card" id="luogo-cerimonia">
+                        <img src="img/cattedrale.jpg" alt="Cattedrale Madonna del Ponte" class="venue-image">
+                        <p class="venue-name">Cattedrale Madonna del Ponte</p>
+                        <p class="venue-address">Piazza del Plebiscito, 1<br>Lanciano (CH)</p>
+                        <a href="https://maps.app.goo.gl/CgDszhp74ZagfSJb7" target="_blank" class="venue-link">Google Maps</a>
+                    </div>
+                    <div class="venue-card" id="luogo-ricevimento">
+                        <img src="img/chiavebianca.jpg" alt="La Chiave Bianca" class="venue-image">
+                        <p class="venue-name">La Chiave Bianca</p>
+                        <p class="venue-address">Contrada Cerreto, s.n.c.<br>Miglianico (CH)</p>
+                        <a href="https://maps.app.goo.gl/NipHFW3FoUbMkX2D9" target="_blank" class="venue-link">Google Maps</a>
+                    </div>
+                </div>
+            </details>
         </div>
-        <!-- Riepilogo finale -->
-        <div class="summary-panel" id="summary-panel" style="display: none;">
-            <p>
-                Hai espresso un <span class="summary-highlight" id="summary-like-count"></span> “Mi piace” durante il gioco.
-            </p>
-            <p>Profili che ti hanno ispirato:</p>
-            <ul class="summary-list" id="summary-list"></ul>
-            <p style="margin-top: 10px;">
-                Ora tocca a te: guarda in sala, trova questi volti
-                e trasforma il match in un sorriso vero.
-            </p>
-            <!-- Bottone neutro per ricominciare -->
-            <button id="restart-button" class="btn-restart">
-                Scorri i profili
-            </button>
+    </div>
+</section>
+<section id="wedgames" class="bg-section wedgames-section">
+    <div class="bg-section-inner wedgames-inner">
+        <div class="confetti confetti-1"></div>
+        <div class="confetti confetti-2"></div>
+        <div class="confetti confetti-3"></div>
+        <div class="fountain fountain-left"><span></span><span></span><span></span></div>
+        <div class="fountain fountain-right"><span></span><span></span><span></span></div>
+        <div class="bg-section-box wedgames-box">
+            <details class="section-details">
+                <summary class="section-summary">WedGames!</summary>
+                <p class="section-intro bg-section-intro">Una piccola sorpresa per voi: giochi e sfide leggere per divertirci durante il matrimonio. Pronti a giocare?</p>
+                <a href="wedgames.html" class="wedgames-btn">Vai ai WedGames!</a>
+            </details>
         </div>
-    </section>
-</main>
+    </div>
+</section>
+<section id="storia" class="section-alt bg-section">
+    <div class="bg-section-inner">
+        <div class="bg-section-box-alt-t">
+            <details class="section-details">
+                <summary class="section-summary">Il viaggio continua...</summary>
+                <div class="story-image-top"><img src="img/japan.jpg" alt="Giappone"></div>
+                <div class="story-content">
+                    <div class="story-column">
+                        <p>Fin dal primo momento in cui le nostre vite si sono incrociate abbiamo capito di avere due motori trainanti nella nostra relazione: il cibo e i viaggi. Abbiamo viaggiato in lungo e in largo alla scoperta di luoghi, culture, tradizioni, popoli e sapori autentici e che ci facessero sentire, ovunque, a casa.</p>
+                        <p>Quando non ci è stato possibile scoprire nuovi posti di persona abbiamo fatto di tutto per avvicinare a noi queste culture, cibi e tradizioni. Abbiamo acquisato utensili, frequantato corsi di cucina e di arte, letto libri sulla loro filosofia e sulla loro cucina, ci siamo seduti nei loro ristoranti ed esplorato mostre di cui Milano ne è piena.</p>
+                    </div>
+                    <div class="story-column">
+                        <p>Se non si fosse capito cerchiamo di essere più espliciti: abbiamo acquistato bacchette, vaporiere e bonsai, imparato a fare il sushi (e quanto ne abbiamo mangiato!), letto libri sull'ikigai, ascoltato storie di imperatori, samurai e geishe.</p>
+                        <p>E quale migliore occasione, se non il viaggio di nozze, per coronare questo sogno e approdare finalmente in Giappone per immergergi nella loro cultura? Qualora voleste contribuire per aiutarci a realizzare questo nostro desiderio, trovate qui sotto le indicazioni:<br><br>G Olivieri &amp; A Acconcia
+                        <div class="copy-block">
+                            <span class="copy-text" data-copy="IT95X0366901600045725350673">IT95X0366901600045725350673</span>
+                            <span class="copy-check" aria-hidden="true">✅</span>
+                        </div>
+                        </p>
+                    </div>
+                </div>
+            </details>
+        </div>
+    </div>
+</section>
+<section id="info-utili" class="bg-section">
+    <div class="bg-section-inner">
+        <div class="bg-section-box">
+            <details class="section-details">
+                <summary class="section-summary">Info Utili</summary>
+                <p class="section-intro bg-section-intro">Abbiamo raccolto alcune informazioni pratiche per aiutarvi ad organizzare al meglio il vostro weekend con noi.</p>
+                <div class="info-subsections">
+                    <details class="info-subsection">
+                        <summary class="info-subsection-title">Come Arrivare</summary>
+                        <div class="info-subsection-content">
+                            <p>La zona del matrimonio è facilmente raggiungibile in auto, treno e aereo. Qui alcune indicazioni pratiche per organizzare il viaggio.</p>
+                            <ul class="info-list">
+                                <li><strong>In auto:</strong> uscite autostradali consigliata (A14 "Pescara Sud – Francavilla" per Miglianico o "Lanciano") e poi seguire le indicazioni per Miglianico o Lanciano.</li>
+                                <li><strong>In treno:</strong> stazioni utili: Pescara Centrale o Lanciano, da cui consigliamo poi di spostarsi con un auto a noleggio.</li>
+                                <li><strong>In aereo:</strong> aeroporto d’Abruzzo (Pescara), per poi proseguire con auto a noleggio.</li>
+                            </ul>
+                            <p>Se vi serve una mano a coordinare gli arrivi o a organizzare eventuali passaggi, scriveteci e proveremo ad aiutarvi.</p>
+                        </div>
+                    </details>
+                    <details class="info-subsection">
+                        <summary class="info-subsection-title">Alloggi</summary>
+                        <div class="info-subsection-content">
+                            <p class="info-subsection-intro">Abbiamo selezionato alcune strutture comode vicino alla location della festa. In fase di prenotazione precisate che siete invitati del matrimonio di "Graziano e Anna". In alternativa consigliamo di rivolgersi alle diverse strutture presenti sul territorio di Lanciano o della costa.</p>
+                            <div class="info-grid">
+                                <div class="info-card">
+                                    <h3>B&B Il Ciliegio</h3>
+                                    <p>Piccolo B&amp;B in collina, immerso nel verde di Contrada Cerreto.</p>
+                                    <p class="info-distance">📍 Contrada Cerreto, Miglianico (CH)</p>
+                                    <a href="https://www.google.com/maps/place/B%26B+Il+Ciliegio/@42.3760488,14.2950225,17z/data=!3m1!4b1!4m11!3m10!1s0x133107d62280e253:0x2be5c177ea41ad13!5m4!1s2026-12-06!2i2!4m1!1i2!8m2!3d42.3760489!4d14.2998934!16s%2Fg%2F11w95zrjl6?entry=ttu&g_ep=EgoyMDI2MDYwNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="info-btn">Google Maps</a>
+                                </div>
+                                <div class="info-card">
+                                    <h3>B&B Fiori di Campo</h3>
+                                    <p>Bed &amp; breakfast familiare tra i vigneti, in zona Santo Stefano.</p>
+                                    <p class="info-distance">📍 C.da / Via Santo Stefano, Ripa Teatina (CH)</p>
+                                    <a href="https://www.fioridicampobb.it/" target="_blank" class="info-btn">Sito web</a>
+                                    <a href="https://www.google.com/maps/place/Fiori+Di+Campo+b%26b/@42.3607215,14.2528829,17z/data=!3m1!4b1!4m11!3m10!1s0x1331aa26e35c00c5:0x86690787c2cc6b1c!5m4!1s2026-12-06!2i2!4m1!1i2!8m2!3d42.3607215!4d14.2554578!16s%2Fg%2F11b73mt1m4?entry=ttu&g_ep=EgoyMDI2MDYwNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="info-btn">Google Maps</a>
+                                </div>
+                                <div class="info-card">
+                                    <h3>Agriturismo La Capezzagna</h3>
+                                    <p>Agriturismo in campagna con vista sulle colline teatine.</p>
+                                    <p class="info-distance">📍 Ripa Teatina (CH)</p>
+                                    <a href="https://www.lacapezzagna.com/" target="_blank" class="info-btn">Sito web</a>
+                                    <a href="https://www.google.com/maps/place/Agriturismo+La+Capezzagna/@42.35452,14.2590168,17z/data=!4m11!3m10!1s0x1331ab97348fb1e9:0x60b2f8ea7bde449e!5m4!1s2026-12-06!2i2!4m1!1i2!8m2!3d42.35452!4d14.2615917!16s%2Fg%2F1tfn4wf9?entry=ttu&g_ep=EgoyMDI2MDYwNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="info-btn">Google Maps</a>
+                                </div>
+                                <div class="info-card">
+                                    <h3>B&B RipaMè</h3>
+                                    <p>B&amp;B raccolto nel centro di Ripa Teatina, comodo per gli spostamenti.</p>
+                                    <p class="info-distance">📍 Ripa Teatina (CH)</p>
+                                    <a href="https://ripame.it/" target="_blank" class="info-btn">Sito web</a>
+                                    <a href="https://www.google.com/maps/place/RipaM%C3%A8+B%26B/@42.3557262,14.2506751,17z/data=!4m11!3m10!1s0x1331abaa27624905:0xa2074476d08b253e!5m4!1s2026-12-06!2i2!4m1!1i2!8m2!3d42.3557262!4d14.25325!16s%2Fg%2F11vbf40rmd?entry=ttu&g_ep=EgoyMDI2MDYwNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="info-btn">Google Maps</a>
+                                </div>
+                                <div class="info-card">
+                                    <h3>Tenuta Ornella</h3>
+                                    <p>Tenuta tra ulivi e vigneti, ideale per soggiorni in gruppo.</p>
+                                    <p class="info-distance">📍 Ripa Teatina (CH)</p>
+                                    <a href="https://www.google.com/maps/place/Tenuta+Ornella/@42.3683449,14.2609705,17z/data=!4m11!3m10!1s0x1331a90017a024e5:0xcc04d6264f816554!5m4!1s2026-12-06!2i2!4m1!1i2!8m2!3d42.3683449!4d14.2635454!16s%2Fg%2F11w7g7zrr3?entry=ttu&g_ep=EgoyMDI2MDYwNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" class="info-btn">Google Maps</a>
+                                </div>
+                                <div class="info-card">
+                                    <h3>Hotel La Chiave dei Trabocchi</h3>
+                                    <p>Struttura moderna sulla Costa dei Trabocchi, con splendida vista mare e servizi completi.</p>
+                                    <p class="info-distance">📍 Zona Costa dei Trabocchi</p>
+                                    <a href="https://www.lachiavedeitrabocchi.it/" target="_blank" class="info-btn">Sito web</a>
+                                    <a href="https://www.google.com/maps/search/Hotel+La+Chiave+dei+Trabocchi" target="_blank" class="info-btn">Google Maps</a>
+                                </div>
+                                <div class="info-card">
+                                    <h3>Hotel L'altra Chiave</h3>
+                                    <p>Hotel di nuova concezione nei pressi di Lanciano, comodo punto di appoggio per la cerimonia e il ricevimento.</p>
+                                    <p class="info-distance">📍 Zona Lanciano / Dintorni</p>
+                                    <a href="https://www.laltrachiave.it/" target="_blank" class="info-btn">Sito web</a>
+                                    <a href="https://www.google.com/maps/search/Hotel+L%27altra+Chiave" target="_blank" class="info-btn">Google Maps</a>
+                                </div>
+                            </div>
+                        </div>
+                    </details>
+                </div>
+            </details>
+        </div>
+    </div>
+</section>
+<section id="foto" class="section-alt bg-section">
+    <div class="bg-section-inner">
+        <div class="bg-section-box-alt">
+            <div class="photos-content">
+                <details class="section-details">
+                    <summary class="section-summary">Foto</summary>
+                    <p class="section-intro bg-section-intro">Prima, durante e dopo il matrimonio condivideremo qui le foto della giornata su Google Photos. Potrete rivivere con noi i momenti più belli e scaricare i vostri ricordi preferiti.</p>
+                    <a href="https://photos.app.goo.gl/awZd1zz9jyntpFAb8" target="_blank" class="photos-btn">Vai all'album</a>
+                </details>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="rsvp" class="bg-section">
+    <div class="bg-section-inner">
+        <div class="bg-section-box">
+            <details class="section-details">
+                <summary class="section-summary">RSVP</summary>
+                <div class="rsvp-container">
+                    <p class="section-intro bg-section-intro">Per permetterci di organizzare al meglio il nostro matrimonio è richiesta una gentile conferma entro il <strong>10 ottobre 2026</strong>. Per comunicare la tua presenza, eventuali intolleranze, allergie o esigenze particolari ti chiediamo di compilare il nostro modulo online. Ci vorranno solo pochi minuti!</p>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScf7X5mLWsiIm0L_ch21AjCg0spXbCmZkp86ZkCzzTx0Ofkng/viewform" target="_blank" class="rsvp-btn">Compila il form RSVP</a>
+                </div>
+            </details>
+        </div>
+    </div>
+</section>
 <footer class="footer">
-    Graziano &amp; Anna · WedTinder – perché ogni matrimonio è anche una nuova rete di amicizie.
+    <p class="footer-text">Con amore, Graziano e Anna</p>
+    <p class="footer-date">7 dicembre 2026</p>
+    <p class="footer-date" id="countdown"></p>
 </footer>
 <script>
-    // URL del JSON – se il file è nella stessa cartella di index.html:
-    const WEDTINDER_JSON_URL = 'wedtinder_json.json';
-    const container = document.getElementById('profiles-container');
-    let cards = [];
-    let currentIndex = 0;
-    let likeCount = 0;
-    const likedProfiles = [];
-    const counterEl = document.getElementById('status-counter');
-    const likedEl = document.getElementById('status-liked');
-    const summaryPanel = document.getElementById('summary-panel');
-    const summaryLikeCount = document.getElementById('summary-like-count');
-    const summaryList = document.getElementById('summary-list');
-    const restartButton = document.getElementById('restart-button');
-    // cache del JSON per restart rapido
-    let cachedProfiles = null;
-    function renderProfiles(profiles) {
-        container.innerHTML = '';
-        profiles.forEach((p, index) => {
-            const card = document.createElement('article');
-            card.className = 'profile-card';
-            if (index === 0) {
-                card.classList.add('active');
-            }
-            // niente Data
-            card.setAttribute('data-name', p.Nome || `Profilo ${index + 1}`);
-            card.innerHTML = `
-                <div class="profile-image-wrapper">
-                    <img src="${p.Foto}" alt="Profilo ${p.Nome || ''}">
-                </div>
-                <div class="profile-header">
-                    <span class="profile-name">${p.Nome || 'Ospite'}</span>
-                </div>
-                <p class="profile-description">
-                    <span class="profile-label">Mi piace:</span>
-                    <span class="profile-value">${p['Mi piace'] || '-'}</span>
-                </p>
-                <p class="profile-meta profile-meta-odio">
-                    <span class="profile-label">Odio:</span>
-                    <span class="profile-value">${p['Odio'] || '-'}</span>
-                </p>
-                <div class="actions">
-                    <button class="btn-like">Mi piace</button>
-                    <button class="btn-skip">Salta</button>
-                </div>
-            `;
-            container.appendChild(card);
+const navToggle = document.querySelector('.nav-toggle');
+const navMenu = document.querySelector('.nav-menu');
+if (navToggle && navMenu) {
+    navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('open');
+    });
+    navMenu.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('open');
         });
-        cards = Array.from(document.querySelectorAll('.profile-card'));
-        currentIndex = 0;
-        likeCount = 0;
-        likedProfiles.length = 0;
-        summaryPanel.style.display = 'none';
-        bindCardEvents();
-        updateStatus();
-    }
-    function updateStatus() {
-        if (!counterEl || !likedEl) return;
-        if (cards.length === 0) {
-            counterEl.textContent = 'Nessun profilo disponibile';
-            likedEl.textContent = '';
-            return;
+    });
+}
+function closeAllDetails() {
+    document.querySelectorAll('details').forEach(d => { d.open = false; });
+}
+const logoLink = document.querySelector('.nav-logo');
+const homeLink = document.querySelector('.nav-menu a[href="#home"]');
+if (logoLink) { logoLink.addEventListener('click', () => { closeAllDetails(); }); }
+if (homeLink) { homeLink.addEventListener('click', () => { closeAllDetails(); }); }
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            const navHeight = document.querySelector('.nav-bar').offsetHeight;
+            const targetPosition = target.offsetTop - navHeight;
+            window.scrollTo({ top: targetPosition, behavior: 'smooth' });
         }
-        counterEl.textContent = `Profilo ${currentIndex + 1} di ${cards.length}`;
-        likedEl.textContent = `Mi piace: ${likeCount}`;
-    }
-    function showCard(index) {
-        cards.forEach((card, i) => {
-            card.classList.toggle('active', i === index);
-        });
-        updateStatus();
-    }
-    function showSummary() {
-        cards.forEach(card => card.classList.remove('active'));
-        summaryLikeCount.textContent = likeCount;
-        summaryList.innerHTML = '';
-        likedProfiles.forEach(name => {
-            const li = document.createElement('li');
-            li.textContent = name;
-            summaryList.appendChild(li);
-        });
-        summaryPanel.style.display = 'block';
-        if (counterEl) counterEl.textContent = 'Fine gioco';
-        if (likedEl) likedEl.textContent = '';
-    }
-    function handleAction(isLike) {
-        if (currentIndex >= cards.length) return;
-        const currentCard = cards[currentIndex];
-        const profileName = currentCard.getAttribute('data-name') || 'Profilo ' + (currentIndex + 1);
-        if (isLike) {
-            likeCount++;
-            likedProfiles.push(profileName);
+    });
+});
+const weddingDate = new Date('2026-12-07');
+const countdown = document.getElementById('countdown');
+setInterval(() => {
+    const now = new Date();
+    const diff = weddingDate - now;
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    countdown.innerText = days + ' giorni al matrimonio';
+}, 1000);
+document.querySelectorAll('.copy-block').forEach(block => {
+    const textEl = block.querySelector('.copy-text');
+    const textToCopy = textEl.getAttribute('data-copy') || textEl.innerText.trim();
+    textEl.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(textToCopy);
+        } catch (err) {
+            const textarea = document.createElement('textarea');
+            textarea.value = textToCopy;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
         }
-        currentIndex++;
-        if (currentIndex < cards.length) {
-            showCard(currentIndex);
-        } else {
-            showSummary();
-        }
-        // opzionale: salvataggio locale
-        localStorage.setItem('wedtinder_likes', JSON.stringify(likedProfiles));
-    }
-    function bindCardEvents() {
-        cards.forEach(card => {
-            const likeBtn = card.querySelector('.btn-like');
-            const skipBtn = card.querySelector('.btn-skip');
-            if (!likeBtn || !skipBtn) return;
-            likeBtn.addEventListener('click', () => handleAction(true));
-            skipBtn.addEventListener('click', () => handleAction(false));
-        });
-    }
-    // Restart: ricomincia dal primo profilo
-    function restartGame() {
-        if (!cachedProfiles) {
-            fetch(WEDTINDER_JSON_URL)
-                .then(res => {
-                    if (!res.ok) throw new Error('Errore nel caricamento del JSON WedTinder');
-                    return res.json();
-                })
-                .then(data => {
-                    cachedProfiles = data;
-                    renderProfiles(cachedProfiles);
-                })
-                .catch(err => {
-                    console.error(err);
-                    if (container) {
-                        container.innerHTML = '<p style="text-align:center; color:#666;">Impossibile caricare i profili. Riprova più tardi.</p>';
-                    }
-                });
-        } else {
-            renderProfiles(cachedProfiles);
-        }
-    }
-    if (restartButton) {
-        restartButton.addEventListener('click', restartGame);
-    }
-    // Caricamento JSON all’avvio
-    fetch(WEDTINDER_JSON_URL)
-        .then(res => {
-            if (!res.ok) throw new Error('Errore nel caricamento del JSON WedTinder');
-            return res.json();
-        })
-        .then(data => {
-            cachedProfiles = data;
-            renderProfiles(data);
-        })
-        .catch(err => {
-            console.error(err);
-            if (container) {
-                container.innerHTML = '<p style="text-align:center; color:#666;">Impossibile caricare i profili. Riprova più tardi.</p>';
-            }
-        });
-</script>
-</body>
-</html>
+        block.classList.add('copied');
+        setTimeout(() => { block.classList.remove('copied'); }, 1500);
+    });
+});

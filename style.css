@@ -155,7 +155,6 @@ main {
 /* BOX IMMAGINE – si adatta alla foto, nessun taglio */
 .profile-image-wrapper {
     width: 100%;
-    /* nessuna altezza fissa: decide l'immagine */
     border-radius: 12px;
     overflow: hidden;
     margin-bottom: 16px;
@@ -164,9 +163,9 @@ main {
 /* IMMAGINE – mantiene proporzioni, niente crop */
 .profile-image-wrapper img {
     display: block;
-    width: 100%;       /* riempie la larghezza della card */
-    height: auto;      /* altezza proporzionale */
-    object-fit: contain; /* evita tagli */
+    width: 100%;
+    height: auto;
+    object-fit: contain;
 }
 /* Header nome profilo */
 .profile-header {
@@ -181,36 +180,28 @@ main {
     font-weight: 600;
     color: var(--color-primary);
 }
-/* Testi Mi piace / Odio */
-.profile-description {
-    font-size: 14px;
-    color: var(--color-text-light);
+/* Testi Mi piace / Odio – stesso stile, label + valore sulla stessa riga */
+.profile-description,
+.profile-meta {
+    font-size: 14px;               /* stessa dimensione per entrambi */
+    color: var(--color-text-light); /* stesso colore */
     margin-bottom: 8px;
     display: flex;
-    gap: 6px;
     flex-wrap: wrap;
+    column-gap: 4px;
 }
-.profile-meta {
-    font-size: 13px;
-    color: var(--color-text-light);
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-}
-/* Label + valore allineati */
+/* Label + valore allineati e coerenti */
 .profile-label {
     font-weight: 600;
     color: var(--color-primary);
 }
 .profile-value {
     font-weight: 400;
-}
-/* Odio: stesso stile, ma con accento cromatico dedicato */
-.profile-meta-odio {
     color: var(--color-text-light);
 }
+/* Odio: stessi font e dimensioni; puoi mantenere un lieve accento sul label se vuoi */
 .profile-meta-odio .profile-label {
-    color: var(--color-accent); /* usa il colore che preferisci per Odio */
+    color: var(--color-accent);
 }
 /* Bottoni Mi piace / Salta */
 .actions {
@@ -244,6 +235,23 @@ main {
 .btn-skip:hover {
     background: var(--color-secondary);
     transform: translateY(-1px);
+}
+/* Bottone neutro "Scorri i profili" */
+.btn-restart {
+    margin-top: 14px;
+    padding: 9px 18px;
+    border-radius: 999px;
+    border: 1px solid var(--color-text-light);
+    background: var(--color-white);
+    color: var(--color-text-light);
+    font-size: 14px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.btn-restart:hover {
+    background: var(--color-secondary);
+    color: var(--color-primary);
 }
 /* Barra di stato */
 .status-bar {

@@ -12,7 +12,7 @@
 </head>
 <body>
 <!-- Navbar semplice -->
- <nav class="nav-bar">
+<nav class="nav-bar">
     <div class="nav-container">
         <!-- Link al sito principale -->
         <a href="index.html#wedgames" class="nav-logo">G &amp; A</a>
@@ -58,6 +58,10 @@
                 Ora tocca a te: guarda in sala, trova questi volti
                 e trasforma il match in un sorriso vero.
             </p>
+            <!-- Bottone neutro per ricominciare -->
+            <button id="restart-button" class="btn-restart">
+                Scorri i profili
+            </button>
         </div>
     </section>
 </main>
@@ -77,16 +81,18 @@
     const summaryPanel = document.getElementById('summary-panel');
     const summaryLikeCount = document.getElementById('summary-like-count');
     const summaryList = document.getElementById('summary-list');
+    const restartButton = document.getElementById('restart-button');
+    // cache del JSON per restart rapido
+    let cachedProfiles = null;
     function renderProfiles(profiles) {
         container.innerHTML = '';
         profiles.forEach((p, index) => {
             const card = document.createElement('article');
             card.className = 'profile-card';
-            // prima card attiva
             if (index === 0) {
                 card.classList.add('active');
             }
-            // niente più Data
+            // niente Data
             card.setAttribute('data-name', p.Nome || `Profilo ${index + 1}`);
             card.innerHTML = `
                 <div class="profile-image-wrapper">
@@ -173,6 +179,31 @@
             skipBtn.addEventListener('click', () => handleAction(false));
         });
     }
+    // Restart: ricomincia dal primo profilo
+    function restartGame() {
+        if (!cachedProfiles) {
+            fetch(WEDTINDER_JSON_URL)
+                .then(res => {
+                    if (!res.ok) throw new Error('Errore nel caricamento del JSON WedTinder');
+                    return res.json();
+                })
+                .then(data => {
+                    cachedProfiles = data;
+                    renderProfiles(cachedProfiles);
+                })
+                .catch(err => {
+                    console.error(err);
+                    if (container) {
+                        container.innerHTML = '<p style="text-align:center; color:#666;">Impossibile caricare i profili. Riprova più tardi.</p>';
+                    }
+                });
+        } else {
+            renderProfiles(cachedProfiles);
+        }
+    }
+    if (restartButton) {
+        restartButton.addEventListener('click', restartGame);
+    }
     // Caricamento JSON all’avvio
     fetch(WEDTINDER_JSON_URL)
         .then(res => {
@@ -180,6 +211,7 @@
             return res.json();
         })
         .then(data => {
+            cachedProfiles = data;
             renderProfiles(data);
         })
         .catch(err => {

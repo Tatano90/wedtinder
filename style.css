@@ -911,6 +911,7 @@ main {
     font-size: 14px;
     color: var(--color-text-light);
 }
+/* Transizione morbida tra i profili WedTinder */
 .profile-card {
     background: var(--color-white);
     border-radius: 14px;
@@ -918,10 +919,23 @@ main {
     padding: 18px 18px 16px;
     margin-bottom: 18px;
     display: none;
+    /* AGGIUNTA per la transizione */
+    opacity: 0;
+    transform: translateX(15px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
 }
 .profile-card.active {
     display: block;
+    /* AGGIUNTA per la transizione */
+    opacity: 1;
+    transform: translateX(0);
 }
+/* Stato in uscita usato dallo script JS */
+.profile-card.exiting {
+    opacity: 0;
+    transform: translateX(-15px);
+}
+
 .profile-image-wrapper {
     width: 100%;
     border-radius: 12px;

@@ -107,7 +107,13 @@ function updateStatus() {
 }
 function showCard(index) {
     cards.forEach((card, i) => {
-        card.classList.toggle('active', i === index);
+        if (i === index) {
+            card.classList.add('active');
+            card.classList.remove('exiting');
+        } else {
+            card.classList.remove('active');
+            card.classList.remove('exiting');
+        }
     });
     updateStatus();
 }
@@ -131,13 +137,19 @@ function handleAction(isLike) {
         likeCount++;
         likedProfiles.push(profileName);
     }
-    currentIndex++;
-    if (currentIndex < cards.length) {
-        showCard(currentIndex);
-    } else {
-        showSummary();
-    }
-    localStorage.setItem('wedtinder_likes', JSON.stringify(likedProfiles));
+    // Transizione in uscita del profilo corrente
+    currentCard.classList.add('exiting');
+    currentCard.classList.remove('active');
+    const TRANSITION_DURATION = 600; // ms, coerente con CSS (0.6s)
+    setTimeout(() => {
+        currentIndex++;
+        if (currentIndex < cards.length) {
+            showCard(currentIndex);
+        } else {
+            showSummary();
+        }
+        localStorage.setItem('wedtinder_likes', JSON.stringify(likedProfiles));
+    }, TRANSITION_DURATION);
 }
 function bindCardEvents() {
     cards.forEach(card => {

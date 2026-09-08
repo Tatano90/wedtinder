@@ -1146,8 +1146,22 @@ main {
     .bg-section-inner {
         padding: 40px 16px;
     }
-    .bg-section-box,
-    .bg-section-box-alt,
+    .bg-section-box {
+                background: var(--color-white);
+                border-radius: 12px;
+                padding: 20px;
+                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+                max-width: 720px;
+                width: 100%;
+                }
+    .bg-section-box-alt {
+                background: var(--color-cream);
+                border-radius: 12px;
+                padding: 20px;
+                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+                max-width: 720px;
+                width: 100%;
+            }
     .bg-section-box-alt-t {
         background: var(--color-cream);
         border-radius: 12px;

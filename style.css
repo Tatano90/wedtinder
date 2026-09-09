@@ -446,7 +446,7 @@ section {
     margin-left: 5px;
     margin-bottom: 5px;
 }
-/* INFO UTILИ SUBSECTIONS */
+/* INFO UTILI SUBSECTIONS */
 .info-subsections {
     margin-top: 24px;
 }
@@ -911,14 +911,13 @@ main {
     font-size: 14px;
     color: var(--color-text-light);
 }
-/* Transizione fade+slide tra i profili WedTinder */
+/* Transizione fade+slide tra i profili WedTinder (card + foto) */
 .profile-card {
     background: var(--color-white);
     border-radius: 14px;
     box-shadow: var(--card-shadow);
     padding: 18px 18px 16px;
     margin-bottom: 18px;
-    /* niente display qui: gestito via JS */
     opacity: 0;
     transform: translateX(20px); /* entra da destra */
     transition: opacity 0.6s ease, transform 0.6s ease;
@@ -938,26 +937,26 @@ main {
     margin-bottom: 16px;
     display: inline-block;
 }
+/* Stato base della foto: pronta per entrare */
 .profile-image-wrapper img {
     display: block;
     width: 100%;
     height: auto;
     object-fit: contain;
     opacity: 0;
-    transform: translateY(10px); /* entra leggermente dal basso */
+    transform: translateY(10px); /* entra dal basso */
     transition: opacity 0.6s ease, transform 0.6s ease;
 }
-/* stato “foto visibile” */
+/* Foto quando la card è attiva: fade + slide in ingresso */
 .profile-card.active .profile-image-wrapper img {
     opacity: 1;
     transform: translateY(0);
 }
-/* stato “foto in uscita” (coerente con la card) */
+/* Foto quando la card esce: fade + piccolo slide in uscita */
 .profile-card.exiting .profile-image-wrapper img {
     opacity: 0;
     transform: translateY(-10px);
 }
-
 .profile-header {
     display: flex;
     justify-content: space-between;

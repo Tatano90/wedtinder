@@ -911,7 +911,7 @@ main {
     font-size: 14px;
     color: var(--color-text-light);
 }
-/* Transizione fade+slide tra i profili WedTinder (card + foto) */
+/* Transizione uniforme fade+slide tra i profili WedTinder (card + foto) */
 .profile-card {
     background: var(--color-white);
     border-radius: 14px;
@@ -919,16 +919,16 @@ main {
     padding: 18px 18px 16px;
     margin-bottom: 18px;
     opacity: 0;
-    transform: translateX(20px); /* entra da destra */
+    transform: translateX(20px); /* stato iniziale: leggermente a destra, trasparente */
     transition: opacity 0.6s ease, transform 0.6s ease;
 }
 .profile-card.active {
     opacity: 1;
-    transform: translateX(0);
+    transform: translateX(0);     /* entra verso il centro */
 }
 .profile-card.exiting {
     opacity: 0;
-    transform: translateX(-20px); /* esce a sinistra */
+    transform: translateX(-20px); /* esce verso sinistra */
 }
 .profile-image-wrapper {
     width: 100%;
@@ -937,25 +937,25 @@ main {
     margin-bottom: 16px;
     display: inline-block;
 }
-/* Stato base della foto: pronta per entrare */
+/* Stato base della foto: stessa logica di fade della card */
 .profile-image-wrapper img {
     display: block;
     width: 100%;
     height: auto;
     object-fit: contain;
     opacity: 0;
-    transform: translateY(10px); /* entra dal basso */
+    transform: translateX(20px); /* allineata al movimento della card */
     transition: opacity 0.6s ease, transform 0.6s ease;
 }
-/* Foto quando la card è attiva: fade + slide in ingresso */
+/* Foto quando la card è attiva: entra con lo stesso fade+slide */
 .profile-card.active .profile-image-wrapper img {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
 }
-/* Foto quando la card esce: fade + piccolo slide in uscita */
+/* Foto quando la card esce: fade+slide verso sinistra, come la card */
 .profile-card.exiting .profile-image-wrapper img {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateX(-20px);
 }
 .profile-header {
     display: flex;

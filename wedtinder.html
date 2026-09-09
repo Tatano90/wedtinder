@@ -58,12 +58,17 @@ const summaryLikeCount = document.getElementById('summary-like-count');
 const summaryList = document.getElementById('summary-list');
 const restartButton = document.getElementById('restart-button');
 let cachedProfiles = null;
+const TRANSITION_DURATION = 600; // ms, coerente con CSS
 function renderProfiles(profiles) {
     container.innerHTML = '';
     profiles.forEach((p, index) => {
         const card = document.createElement('article');
         card.className = 'profile-card';
-        if (index === 0) card.classList.add('active');
+        card.style.display = 'none';   // nascosto di default
+        if (index === 0) {
+            card.classList.add('active');
+            card.style.display = 'block';
+        }
         card.setAttribute('data-name', p.Nome || `Profilo ${index + 1}`);
         card.innerHTML = `
             <div class="profile-image-wrapper">
@@ -108,17 +113,26 @@ function updateStatus() {
 function showCard(index) {
     cards.forEach((card, i) => {
         if (i === index) {
-            card.classList.add('active');
+            card.style.display = 'block';
             card.classList.remove('exiting');
+            // forziamo un repaint per far scattare la transizione di ingresso
+            requestAnimationFrame(() => {
+                card.classList.add('active');
+            });
         } else {
             card.classList.remove('active');
             card.classList.remove('exiting');
+            card.style.display = 'none';
         }
     });
     updateStatus();
 }
 function showSummary() {
-    cards.forEach(card => card.classList.remove('active'));
+    cards.forEach(card => {
+        card.classList.remove('active');
+        card.classList.remove('exiting');
+        card.style.display = 'none';
+    });
     summaryLikeCount.textContent = likeCount;
     summaryList.innerHTML = '';
     likedProfiles.forEach(name => {
@@ -137,11 +151,11 @@ function handleAction(isLike) {
         likeCount++;
         likedProfiles.push(profileName);
     }
-    // Transizione in uscita del profilo corrente
+    // transizione in uscita: fade + slide verso sinistra
     currentCard.classList.add('exiting');
     currentCard.classList.remove('active');
-    const TRANSITION_DURATION = 600; // ms, coerente con CSS (0.6s)
     setTimeout(() => {
+        currentCard.style.display = 'none';
         currentIndex++;
         if (currentIndex < cards.length) {
             showCard(currentIndex);

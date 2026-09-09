@@ -774,11 +774,11 @@ section {
     text-align: left;
 }
 .game-tagline {
-        font-family: Georgia, 'Times New Roman', Times, serif;
-        font-size: 15px;
-        color: var(--color-accent);
-        margin-bottom: 14px;
-        font-weight: 500;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 15px;
+    color: var(--color-accent);
+    margin-bottom: 14px;
+    font-weight: 500;
 }
 .game-text {
     font-size: 15px;
@@ -911,29 +911,25 @@ main {
     font-size: 14px;
     color: var(--color-text-light);
 }
-/* Transizione morbida tra i profili WedTinder */
+/* Transizione fade+slide tra i profili WedTinder */
 .profile-card {
     background: var(--color-white);
     border-radius: 14px;
     box-shadow: var(--card-shadow);
     padding: 18px 18px 16px;
     margin-bottom: 18px;
-    display: none;
-    /* AGGIUNTA per la transizione */
+    /* niente display qui: gestito via JS */
     opacity: 0;
-    transform: translateX(15px);
+    transform: translateX(20px); /* entra da destra */
     transition: opacity 0.6s ease, transform 0.6s ease;
 }
 .profile-card.active {
-    display: block;
-    /* AGGIUNTA per la transizione */
     opacity: 1;
     transform: translateX(0);
 }
-/* Stato in uscita usato dallo script JS */
 .profile-card.exiting {
     opacity: 0;
-    transform: translateX(-15px);
+    transform: translateX(-20px); /* esce a sinistra */
 }
 .profile-image-wrapper {
     width: 100%;
@@ -1160,21 +1156,21 @@ main {
         padding: 40px 16px;
     }
     .bg-section-box {
-                background: var(--color-white);
-                border-radius: 12px;
-                padding: 20px;
-                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-                max-width: 720px;
-                width: 100%;
-                }
+        background: var(--color-white);
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        max-width: 720px;
+        width: 100%;
+    }
     .bg-section-box-alt {
-                background: var(--color-cream);
-                border-radius: 12px;
-                padding: 20px;
-                box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
-                max-width: 720px;
-                width: 100%;
-            }
+        background: var(--color-cream);
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        max-width: 720px;
+        width: 100%;
+    }
     .bg-section-box-alt-t {
         background: var(--color-cream);
         border-radius: 12px;
@@ -1252,7 +1248,7 @@ main {
     .hero-wedtinder .hero-title { font-size: 40px; }
     .hero-wedtinder .hero-subtitle { font-size: 16px; }
     .game-container { padding: 20px 14px 18px; }
-    .game-header-title {font-size: 36px;}
+    .game-header-title { font-size: 36px; }
 }
 @media (max-width: 600px), (max-height: 500px) {
     section { padding: 24px 16px; }
@@ -1262,7 +1258,7 @@ main {
     .hero-wedgames .hero-subtitle { font-size: 16px; }
     .hero-btn { width: 100%; max-width: 260px; }
     .bg-section-inner { padding: 32px 14px; }
-    .game-header-title {font-size: 36px;}
+    .game-header-title { font-size: 36px; }
 }
 /* Smooth Scroll */
 html {

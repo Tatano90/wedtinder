@@ -943,7 +943,21 @@ main {
     width: 100%;
     height: auto;
     object-fit: contain;
+    opacity: 0;
+    transform: translateY(10px); /* entra leggermente dal basso */
+    transition: opacity 0.6s ease, transform 0.6s ease;
 }
+/* stato “foto visibile” */
+.profile-card.active .profile-image-wrapper img {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* stato “foto in uscita” (coerente con la card) */
+.profile-card.exiting .profile-image-wrapper img {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
 .profile-header {
     display: flex;
     justify-content: space-between;

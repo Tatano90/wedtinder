@@ -19,12 +19,19 @@
         <h1 class="hero-title">WedTinder</h1>
         <p class="hero-subtitle">Swipe, sorrisi e nuove connessioni</p>
         <div class="hero-divider"></div>
-        <p class="hero-description">Un piccolo gioco per rompere il ghiaccio durante il matrimonio: scorrete i profili degli invitati, scoprite chi condivide i vostri “Mi piace” e i vostri “Odio” e lasciatevi guidare dai match della serata.</p>
+        <p class="hero-description">
+            Un piccolo gioco per rompere il ghiaccio durante il matrimonio:
+            scorrete i profili degli invitati, scoprite chi condivide i vostri “Mi piace” e i vostri “Odio”
+            e lasciatevi guidare dai match della serata.
+        </p>
     </section>
     <section class="game-container">
         <div class="game-header">
             <h1 class="game-header-title">Profili della serata</h1>
-            <p class="game-header-text">Clicca <strong>Mi piace</strong> se ti piacerebbe conoscere meglio questa persona, oppure <strong>Salta</strong> per passare al profilo successivo.</p>
+            <p class="game-header-text">
+                Clicca <strong>Mi piace</strong> se ti piacerebbe conoscere meglio questa persona,
+                oppure <strong>Salta</strong> per passare al profilo successivo.
+            </p>
         </div>
         <div id="profiles-container"></div>
         <div class="status-bar">
@@ -35,7 +42,9 @@
             <p>Hai espresso un <span class="summary-highlight" id="summary-like-count"></span> “Mi piace” durante il gioco.</p>
             <p>Profili che ti hanno ispirato:</p>
             <ul class="summary-list" id="summary-list"></ul>
-            <p style="margin-top: 10px;">Ora tocca a te: guarda in sala, trova questi volti e trasforma il match in un sorriso vero.</p>
+            <p style="margin-top: 10px;">
+                Ora tocca a te: guarda in sala, trova questi volti e trasforma il match in un sorriso vero.
+            </p>
             <button id="restart-button" class="btn-restart">Scorri i profili</button>
         </div>
     </section>
@@ -58,7 +67,9 @@ const summaryLikeCount = document.getElementById('summary-like-count');
 const summaryList = document.getElementById('summary-list');
 const restartButton = document.getElementById('restart-button');
 let cachedProfiles = null;
-const TRANSITION_DURATION = 600; // ms, in linea con CSS
+/* Durata usata solo per la pausa prima di passare al profilo successivo;
+   lato CSS ora non ci sono più transizioni. */
+const TRANSITION_DURATION = 600;
 function renderProfiles(profiles) {
     container.innerHTML = '';
     profiles.forEach((p, index) => {
@@ -67,7 +78,6 @@ function renderProfiles(profiles) {
         card.style.display = 'none';   // nascosto di default
         if (index === 0) {
             card.style.display = 'block';
-            // .active verrà aggiunta da showCard(0) con requestAnimationFrame
         }
         card.setAttribute('data-name', p.Nome || `Profilo ${index + 1}`);
         card.innerHTML = `
@@ -98,7 +108,7 @@ function renderProfiles(profiles) {
     likedProfiles.length = 0;
     summaryPanel.style.display = 'none';
     bindCardEvents();
-    showCard(0); // attiva il primo con transizione
+    showCard(0);
 }
 function updateStatus() {
     if (!counterEl || !likedEl) return;
@@ -112,27 +122,12 @@ function updateStatus() {
 }
 function showCard(index) {
     cards.forEach((card, i) => {
-        if (i === index) {
-            // Stato iniziale: visibile ma NON ancora active → il browser vede opacity 0 / translateX(20px)
-            card.style.display = 'block';
-            card.classList.remove('exiting');
-            card.classList.remove('active');
-            // Forziamo un frame di rendering, poi aggiungiamo .active → parte il fade+slide
-            requestAnimationFrame(() => {
-                card.classList.add('active');
-            });
-        } else {
-            card.classList.remove('active');
-            card.classList.remove('exiting');
-            card.style.display = 'none';
-        }
+        card.style.display = (i === index) ? 'block' : 'none';
     });
     updateStatus();
 }
 function showSummary() {
     cards.forEach(card => {
-        card.classList.remove('active');
-        card.classList.remove('exiting');
         card.style.display = 'none';
     });
     summaryLikeCount.textContent = likeCount;
@@ -153,9 +148,7 @@ function handleAction(isLike) {
         likeCount++;
         likedProfiles.push(profileName);
     }
-    // transizione in uscita: stessa logica di fade+slide applicata alla card e alla foto
-    currentCard.classList.add('exiting');
-    currentCard.classList.remove('active');
+    // facoltativo: piccola pausa prima di mostrare il prossimo
     setTimeout(() => {
         currentCard.style.display = 'none';
         currentIndex++;
@@ -179,23 +172,45 @@ function bindCardEvents() {
 function restartGame() {
     if (!cachedProfiles) {
         fetch(WEDTINDER_JSON_URL)
-            .then(res => { if (!res.ok) throw new Error('Errore nel caricamento del JSON WedTinder'); return res.json(); })
-            .then(data => { cachedProfiles = data; renderProfiles(cachedProfiles); })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('Errore nel caricamento del JSON WedTinder');
+                }
+                return res.json();
+            })
+            .then(data => {
+                cachedProfiles = data;
+                renderProfiles(cachedProfiles);
+            })
             .catch(err => {
                 console.error(err);
-                if (container) container.innerHTML = '<p style="text-align:center; color:#666;">Impossibile caricare i profili. Riprova più tardi.</p>';
+                if (container) {
+                    container.innerHTML = '<p style="text-align:center; color:#666;">Impossibile caricare i profili. Riprova più tardi.</p>';
+                }
             });
     } else {
         renderProfiles(cachedProfiles);
     }
 }
-if (restartButton) restartButton.addEventListener('click', restartGame);
+if (restartButton) {
+    restartButton.addEventListener('click', restartGame);
+}
 fetch(WEDTINDER_JSON_URL)
-    .then(res => { if (!res.ok) throw new Error('Errore nel caricamento del JSON WedTinder'); return res.json(); })
-    .then(data => { cachedProfiles = data; renderProfiles(data); })
+    .then(res => {
+        if (!res.ok) {
+            throw new Error('Errore nel caricamento del JSON WedTinder');
+        }
+        return res.json();
+    })
+    .then(data => {
+        cachedProfiles = data;
+        renderProfiles(data);
+    })
     .catch(err => {
         console.error(err);
-        if (container) container.innerHTML = '<p style="text-align:center; color:#666;">Impossibile caricare i profili. Riprova più tardi.</p>';
+        if (container) {
+            container.innerHTML = '<p style="text-align:center; color:#666;">Impossibile caricare i profili. Riprova più tardi.</p>';
+        }
     });
 </script>
 </body>

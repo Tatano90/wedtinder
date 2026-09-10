@@ -54,6 +54,19 @@
     <p class="footer-date">Perché ogni matrimonio è anche una nuova rete di amicizie.</p>
 </footer>
 <script>
+// *** GATE DI ACCESSO CON PASSWORD ***
+(function () {
+    const PASSWORD_CORRETTA = 'wedtinder07122026!';
+    const input = window.prompt('Inserisci la password per accedere a WedTinder:');
+    // Se annulla o password errata → messaggio + redirect a index.html
+    if (input === null || input !== PASSWORD_CORRETTA) {
+        alert('Password non corretta. Verrai reindirizzato alla pagina principale.');
+        window.location.href = 'index.html';
+        return; // blocca l'esecuzione del resto del JS di WedTinder
+    }
+    // Se la password è corretta, lo script prosegue normalmente
+})();
+// --- Codice originale WedTinder ---
 const WEDTINDER_JSON_URL = 'wedtinder_json.json';
 const container = document.getElementById('profiles-container');
 let cards = [];
@@ -92,8 +105,8 @@ function renderProfiles(profiles) {
                 <span class="profile-value">${p['Odio'] || '-'}</span>
             </p>
             <div class="actions">
-                <button class="btn-like">Mi piace</button>
                 <button class="btn-skip">Salta</button>
+                <button class="btn-like">Mi piace</button>
             </div>
         `;
         container.appendChild(card);

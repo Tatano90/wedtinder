@@ -922,7 +922,7 @@ main {
 /* Contenitore immagine con dimensioni fisse */
 .profile-image-wrapper {
     width: 100%;
-    height: 260px;           /* altezza fissa (puoi regolare) */
+    height: 400px;           /* altezza fissa (puoi regolare) */
     border-radius: 12px;
     overflow: hidden;
     margin-bottom: 16px;

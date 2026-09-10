@@ -911,7 +911,7 @@ main {
     font-size: 14px;
     color: var(--color-text-light);
 }
-/* Profili WedTinder – senza transizioni */
+/* Profili WedTinder – card senza transizioni */
 .profile-card {
     background: var(--color-white);
     border-radius: 14px;
@@ -919,22 +919,32 @@ main {
     padding: 18px 18px 16px;
     margin-bottom: 18px;
 }
-/* Contenitore immagine con dimensioni fisse */
+/* Contenitore immagine con altezza fissa */
 .profile-image-wrapper {
     width: 100%;
-    height: 400px;           /* altezza fissa (puoi regolare) */
+    height: 400px;           /* altezza fissa impostata */
     border-radius: 12px;
     overflow: hidden;
     margin-bottom: 16px;
     display: block;
 }
-/* L'immagine si adatta al contenitore, sempre visibile */
+/* Immagine con transizione fade in/out */
 .profile-image-wrapper img {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: contain;     /* niente crop */
-    object-position: center; /* centrata */
+    object-fit: contain;
+    object-position: center;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+/* Stato attivo: fade in */
+.profile-image-wrapper img.image-active {
+    opacity: 1;
+}
+/* Stato in uscita: fade out */
+.profile-image-wrapper img.image-exiting {
+    opacity: 0;
 }
 .profile-header {
     display: flex;

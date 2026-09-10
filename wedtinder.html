@@ -67,18 +67,14 @@ const summaryLikeCount = document.getElementById('summary-like-count');
 const summaryList = document.getElementById('summary-list');
 const restartButton = document.getElementById('restart-button');
 let cachedProfiles = null;
-/* Durata usata solo per la pausa prima di passare al profilo successivo;
-   lato CSS ora non ci sono più transizioni. */
+/* durata del fade delle immagini (coerente con CSS) */
 const TRANSITION_DURATION = 600;
 function renderProfiles(profiles) {
     container.innerHTML = '';
     profiles.forEach((p, index) => {
         const card = document.createElement('article');
         card.className = 'profile-card';
-        card.style.display = 'none';   // nascosto di default
-        if (index === 0) {
-            card.style.display = 'block';
-        }
+        card.style.display = 'none';
         card.setAttribute('data-name', p.Nome || `Profilo ${index + 1}`);
         card.innerHTML = `
             <div class="profile-image-wrapper">
@@ -108,7 +104,7 @@ function renderProfiles(profiles) {
     likedProfiles.length = 0;
     summaryPanel.style.display = 'none';
     bindCardEvents();
-    showCard(0);
+    showCard(0);     // mostra il primo profilo con fade in sull'immagine
 }
 function updateStatus() {
     if (!counterEl || !likedEl) return;
@@ -120,15 +116,38 @@ function updateStatus() {
     counterEl.textContent = `Profilo ${currentIndex + 1} di ${cards.length}`;
     likedEl.textContent = `Mi piace: ${likeCount}`;
 }
+/* Mostra il profilo "index" con fade in sulla foto;
+   nasconde gli altri (foto in stato base, opacity 0) */
 function showCard(index) {
     cards.forEach((card, i) => {
-        card.style.display = (i === index) ? 'block' : 'none';
+        const img = card.querySelector('.profile-image-wrapper img');
+        if (!img) return;
+        if (i === index) {
+            card.style.display = 'block';
+            // reset classi immagine
+            img.classList.remove('image-exiting');
+            img.classList.remove('image-active');
+            // forziamo un frame di rendering, poi attiviamo il fade in
+            requestAnimationFrame(() => {
+                img.classList.add('image-active');
+            });
+        } else {
+            // nascondiamo gli altri profili
+            card.style.display = 'none';
+            img.classList.remove('image-active');
+            img.classList.remove('image-exiting');
+        }
     });
     updateStatus();
 }
 function showSummary() {
     cards.forEach(card => {
         card.style.display = 'none';
+        const img = card.querySelector('.profile-image-wrapper img');
+        if (img) {
+            img.classList.remove('image-active');
+            img.classList.remove('image-exiting');
+        }
     });
     summaryLikeCount.textContent = likeCount;
     summaryList.innerHTML = '';
@@ -140,15 +159,21 @@ function showSummary() {
     summaryPanel.style.display = 'block';
     if (likedEl) likedEl.textContent = '';
 }
+/* Gestisce click su Mi piace / Salta con fade out dell'immagine prima di passare al profilo successivo */
 function handleAction(isLike) {
     if (currentIndex >= cards.length) return;
     const currentCard = cards[currentIndex];
     const profileName = currentCard.getAttribute('data-name') || 'Profilo ' + (currentIndex + 1);
+    const img = currentCard.querySelector('.profile-image-wrapper img');
     if (isLike) {
         likeCount++;
         likedProfiles.push(profileName);
     }
-    // facoltativo: piccola pausa prima di mostrare il prossimo
+    if (img) {
+        // fade out: rimuoviamo active e impostiamo exiting
+        img.classList.remove('image-active');
+        img.classList.add('image-exiting');
+    }
     setTimeout(() => {
         currentCard.style.display = 'none';
         currentIndex++;
@@ -185,7 +210,8 @@ function restartGame() {
             .catch(err => {
                 console.error(err);
                 if (container) {
-                    container.innerHTML = '<p style="text-align:center; color:#666;">Impossibile caricare i profili. Riprova più tardi.</p>';
+                    container.innerHTML =
+                        '<p style="text-align:center; color:#666;">Impossibile caricare i profili. Riprova più tardi.</p>';
                 }
             });
     } else {
@@ -209,7 +235,8 @@ fetch(WEDTINDER_JSON_URL)
     .catch(err => {
         console.error(err);
         if (container) {
-            container.innerHTML = '<p style="text-align:center; color:#666;">Impossibile caricare i profili. Riprova più tardi.</p>';
+            container.innerHTML =
+                '<p style="text-align:center; color:#666;">Impossibile caricare i profili. Riprova più tardi.</p>';
         }
     });
 </script>

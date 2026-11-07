@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WedTinder – Graziano & Anna</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,81 +14,82 @@
         <a href="index.html#wedgames" class="nav-link-main">Torna al sito</a>
     </div>
 </nav>
-<main> 
+
+<main>
     <section class="hero-wedtinder">
         <h1 class="hero-title">WedTinder</h1>
         <p class="hero-subtitle">Swipe, sorrisi e nuove connessioni</p>
         <div class="hero-divider"></div>
         <p class="hero-description">
             Un piccolo gioco per rompere il ghiaccio durante il matrimonio:
-            scorrete i profili degli invitati, scoprite chi condivide i vostri “Mi piace” e i vostri “Odio”
-            e lasciatevi guidare dai match della serata.
+            scorri i profili degli invitati e scopri chi condivide i tuoi “Mi piace” e i tuoi “Odio”.
         </p>
     </section>
+
     <section class="game-container">
         <div class="game-header">
             <h1 class="game-header-title">Profili della serata</h1>
             <p class="game-header-text">
-                Clicca <strong>Mi piace</strong> se ti piacerebbe conoscere meglio questa persona,
-                oppure <strong>Salta</strong> per passare al profilo successivo.
+                Scorri liberamente i profili con i pulsanti <strong>Indietro</strong> e <strong>Avanti</strong>.
             </p>
         </div>
+
         <div id="profiles-container"></div>
+
         <div class="status-bar">
             <span class="status-counter" id="status-counter"></span>
-            <span id="status-liked"></span>
         </div>
+
         <div class="summary-panel" id="summary-panel" style="display: none;">
-            <p>Hai espresso un <span class="summary-highlight" id="summary-like-count"></span> “Mi piace” durante il gioco.</p>
-            <p>Profili che ti hanno ispirato:</p>
-            <ul class="summary-list" id="summary-list"></ul>
+            <p>Hai visto tutti i profili della serata.</p>
             <p style="margin-top: 10px;">
-                Ora tocca a te: guarda in sala, trova questi volti e trasforma il match in un sorriso vero.
+                Ora guarda in sala, trova questi volti e trasforma una presentazione in un sorriso vero.
             </p>
-            <button id="restart-button" class="btn-restart">Scorri i profili</button>
+            <div class="actions">
+                <button id="back-to-profiles-button" class="btn-skip">Indietro</button>
+                <button id="restart-button" class="btn-restart">Ricomincia</button>
+            </div>
         </div>
     </section>
 </main>
+
 <footer class="footer">
-    <p class="footer-text">WedTinder - Graziano e Anna</p> 
+    <p class="footer-text">WedTinder - Graziano e Anna</p>
     <p class="footer-date">Perché ogni matrimonio è anche una nuova rete di amicizie.</p>
 </footer>
+
 <script>
 // *** GATE DI ACCESSO CON PASSWORD ***
 (function () {
     const PASSWORD_CORRETTA = '123stella';
     const input = window.prompt('Inserisci la password per accedere a WedTinder:');
-    // Se annulla o password errata → messaggio + redirect a index.html
+
     if (input === null || input !== PASSWORD_CORRETTA) {
         alert('Password non corretta. Verrai reindirizzato alla pagina principale.');
         window.location.href = 'index.html';
-        return; // blocca l'esecuzione del resto del JS di WedTinder
+        return;
     }
-    // Se la password è corretta, lo script prosegue normalmente
 })();
-// --- Codice originale WedTinder ---
+
 const WEDTINDER_JSON_URL = 'wedtinder_json.json';
 const container = document.getElementById('profiles-container');
+const counterEl = document.getElementById('status-counter');
+const summaryPanel = document.getElementById('summary-panel');
+const restartButton = document.getElementById('restart-button');
+const backToProfilesButton = document.getElementById('back-to-profiles-button');
+
 let cards = [];
 let currentIndex = 0;
-let likeCount = 0;
-const likedProfiles = [];
-const counterEl = document.getElementById('status-counter');
-const likedEl = document.getElementById('status-liked');
-const summaryPanel = document.getElementById('summary-panel');
-const summaryLikeCount = document.getElementById('summary-like-count');
-const summaryList = document.getElementById('summary-list');
-const restartButton = document.getElementById('restart-button');
 let cachedProfiles = null;
-/* durata del fade delle immagini (coerente con CSS) */
-const TRANSITION_DURATION = 600;
+
 function renderProfiles(profiles) {
     container.innerHTML = '';
+
     profiles.forEach((p, index) => {
         const card = document.createElement('article');
         card.className = 'profile-card';
         card.style.display = 'none';
-        card.setAttribute('data-name', p.Nome || `Profilo ${index + 1}`);
+
         card.innerHTML = `
             <div class="profile-image-wrapper">
                 <img src="${p.Foto}" alt="Profilo ${p.Nome || ''}" loading="lazy">
@@ -105,152 +106,104 @@ function renderProfiles(profiles) {
                 <span class="profile-value">${p['Odio'] || '-'}</span>
             </p>
             <div class="actions">
-                <button class="btn-skip">Salta</button>
-                <button class="btn-like">Mi piace</button>
+                <button class="btn-skip btn-previous" ${index === 0 ? 'disabled' : ''}>Indietro</button>
+                <button class="btn-like btn-next">Avanti</button>
             </div>
         `;
+
         container.appendChild(card);
     });
+
     cards = Array.from(document.querySelectorAll('.profile-card'));
     currentIndex = 0;
-    likeCount = 0;
-    likedProfiles.length = 0;
     summaryPanel.style.display = 'none';
     bindCardEvents();
-    showCard(0);     // mostra il primo profilo con fade in sull'immagine
+    showCard(0);
 }
+
 function updateStatus() {
-    if (!counterEl || !likedEl) return;
+    if (!counterEl) return;
+
     if (cards.length === 0) {
         counterEl.textContent = 'Nessun profilo disponibile';
-        likedEl.textContent = '';
         return;
     }
+
     counterEl.textContent = `Profilo ${currentIndex + 1} di ${cards.length}`;
-    likedEl.textContent = `Mi piace: ${likeCount}`;
 }
-/* Mostra il profilo "index" con fade in sulla foto;
-   nasconde gli altri (foto in stato base, opacity 0) */
+
 function showCard(index) {
+    if (index < 0 || index >= cards.length) return;
+
+    summaryPanel.style.display = 'none';
+    currentIndex = index;
+
     cards.forEach((card, i) => {
         const img = card.querySelector('.profile-image-wrapper img');
-        if (!img) return;
-        if (i === index) {
+
+        if (i === currentIndex) {
             card.style.display = 'block';
-            // reset classi immagine
-            img.classList.remove('image-exiting');
-            img.classList.remove('image-active');
-            // forziamo un frame di rendering, poi attiviamo il fade in
-            requestAnimationFrame(() => {
-                img.classList.add('image-active');
-            });
+            img?.classList.remove('image-exiting', 'image-active');
+            requestAnimationFrame(() => img?.classList.add('image-active'));
         } else {
-            // nascondiamo gli altri profili
             card.style.display = 'none';
-            img.classList.remove('image-active');
-            img.classList.remove('image-exiting');
+            img?.classList.remove('image-active', 'image-exiting');
         }
     });
+
     updateStatus();
 }
+
 function showSummary() {
     cards.forEach(card => {
         card.style.display = 'none';
-        const img = card.querySelector('.profile-image-wrapper img');
-        if (img) {
-            img.classList.remove('image-active');
-            img.classList.remove('image-exiting');
-        }
+        card.querySelector('.profile-image-wrapper img')?.classList.remove('image-active', 'image-exiting');
     });
-    summaryLikeCount.textContent = likeCount;
-    summaryList.innerHTML = '';
-    likedProfiles.forEach(name => {
-        const li = document.createElement('li');
-        li.textContent = name;
-        summaryList.appendChild(li);
-    });
+
+    counterEl.textContent = `Hai visto ${cards.length} profili`;
     summaryPanel.style.display = 'block';
-    if (likedEl) likedEl.textContent = '';
 }
-/* Gestisce click su Mi piace / Salta con fade out dell'immagine prima di passare al profilo successivo */
-function handleAction(isLike) {
-    if (currentIndex >= cards.length) return;
-    const currentCard = cards[currentIndex];
-    const profileName = currentCard.getAttribute('data-name') || 'Profilo ' + (currentIndex + 1);
-    const img = currentCard.querySelector('.profile-image-wrapper img');
-    if (isLike) {
-        likeCount++;
-        likedProfiles.push(profileName);
+
+function goNext() {
+    if (currentIndex < cards.length - 1) {
+        showCard(currentIndex + 1);
+    } else {
+        showSummary();
     }
-    if (img) {
-        // fade out: rimuoviamo active e impostiamo exiting
-        img.classList.remove('image-active');
-        img.classList.add('image-exiting');
-    }
-    setTimeout(() => {
-        currentCard.style.display = 'none';
-        currentIndex++;
-        if (currentIndex < cards.length) {
-            showCard(currentIndex);
-        } else {
-            showSummary();
-        }
-        localStorage.setItem('wedtinder_likes', JSON.stringify(likedProfiles));
-    }, TRANSITION_DURATION);
 }
+
+function goPrevious() {
+    if (currentIndex > 0) {
+        showCard(currentIndex - 1);
+    }
+}
+
 function bindCardEvents() {
     cards.forEach(card => {
-        const likeBtn = card.querySelector('.btn-like');
-        const skipBtn = card.querySelector('.btn-skip');
-        if (!likeBtn || !skipBtn) return;
-        likeBtn.addEventListener('click', () => handleAction(true));
-        skipBtn.addEventListener('click', () => handleAction(false));
+        card.querySelector('.btn-next')?.addEventListener('click', goNext);
+        card.querySelector('.btn-previous')?.addEventListener('click', goPrevious);
     });
 }
+
 function restartGame() {
-    if (!cachedProfiles) {
-        fetch(WEDTINDER_JSON_URL)
-            .then(res => {
-                if (!res.ok) {
-                    throw new Error('Errore nel caricamento del JSON WedTinder');
-                }
-                return res.json();
-            })
-            .then(data => {
-                cachedProfiles = data;
-                renderProfiles(cachedProfiles);
-            })
-            .catch(err => {
-                console.error(err);
-                if (container) {
-                    container.innerHTML =
-                        '<p style="text-align:center; color:#666;">Impossibile caricare i profili. Riprova più tardi.</p>';
-                }
-            });
-    } else {
-        renderProfiles(cachedProfiles);
-    }
+    showCard(0);
 }
-if (restartButton) {
-    restartButton.addEventListener('click', restartGame);
-}
+
+restartButton?.addEventListener('click', restartGame);
+backToProfilesButton?.addEventListener('click', () => showCard(cards.length - 1));
+
 fetch(WEDTINDER_JSON_URL)
     .then(res => {
-        if (!res.ok) {
-            throw new Error('Errore nel caricamento del JSON WedTinder');
-        }
+        if (!res.ok) throw new Error('Errore nel caricamento del JSON WedTinder');
         return res.json();
     })
     .then(data => {
         cachedProfiles = data;
-        renderProfiles(data);
+        renderProfiles(cachedProfiles);
     })
     .catch(err => {
         console.error(err);
-        if (container) {
-            container.innerHTML =
-                '<p style="text-align:center; color:#666;">Impossibile caricare i profili. Riprova più tardi.</p>';
-        }
+        container.innerHTML = '<p style="text-align:center; color:#666;">Impossibile caricare i profili. Riprova più tardi.</p>';
     });
 </script>
 </body>
